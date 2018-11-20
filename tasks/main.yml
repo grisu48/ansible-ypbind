@@ -1,9 +1,10 @@
 ---
 
 ## ==== Install ============================================================= ##
-- name: Ensure packages is installed
-  yum: name={{item}} state='latest'
-  with_items: "{{ ypbind_pkgs }}"
+- name: Ensure packages are installed
+  yum: 
+    name: '{{ ypbind_pkgs }}'
+    state: 'latest'
 
 ## ==== Configuration section =============================================== ##
 - name: Configure domain
