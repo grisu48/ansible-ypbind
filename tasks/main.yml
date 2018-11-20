@@ -1,0 +1,22 @@
+---
+
+## ==== Install ============================================================= ##
+- name: Ensure packages is installed
+  yum: name={{item}} state='latest'
+  with_items: "{{ ypbind_pkgs }}"
+
+## ==== Configuration section =============================================== ##
+- name: Configure domain
+  shell: ypdomainname "{{ yp_nisdomain }}"
+  notify: Restart {{ ypbind_services }}
+  
+- name: Configure authconfig
+  shell: authconfig --enablenis --nisdomain={{ yp_nisdomain }} --nisserver={{ yp_nisserver }} --enablemkhomedir --update 
+  notify: Restart {{ ypbind_services }}
+
+- name: Set NIS Domain in network config
+  lineinfile:
+    path: /etc/sysconfig/network
+    regexp: '^NISDOMAIN='
+    line: "NISDOMAIN={{ yp_nisdomain }}"
+  notify: Restart {{ ypbind_services }}

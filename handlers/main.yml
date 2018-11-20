@@ -1,0 +1,8 @@
+---
+## ==== Restart service ===================================================== ##
+- name: Restart {{ ypbind_services }}
+  service: 
+    name: "{{ item }}"
+    enabled: 'yes'
+    state: 'restarted'
+  with_items: "{{ ypbind_services }}"

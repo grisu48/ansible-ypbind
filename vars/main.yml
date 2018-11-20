@@ -1,0 +1,3 @@
+---
+ypbind_pkgs: ['rpcbind', 'ypbind']
+ypbind_services: ['rpcbind', 'ypbind']
